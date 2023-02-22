@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import InfoData from "./components/InfoData";
+import UserInput from "./components/UserInput";
 
 function App() {
+  const [userData, setUserData] = useState([]);
+  function handleAddUserData(user) {
+    let newData = [...userData];
+    newData.push(user);
+    setUserData(newData);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <UserInput addUser={handleAddUserData} />
+      <table>
+        <tbody>
+          {userData.length > 0 &&
+            userData.map((user) => {
+              return <InfoData key={user.id} user={user} />;
+            })}
+        </tbody>
+      </table>
+    </>
   );
 }
 
